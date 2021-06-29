@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import com.example.androidweatherapp.models.WeatherForLocation
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -20,12 +24,30 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val call = api.getWeatherForWhereOnEarthId(44418)
-        val response = call.execute()
-        val weatherForLocation = response.body()
-        if (weatherForLocation != null) {
-            //Toast.makeText(this, "We have a response", Toast.LENGTH_SHORT).show()
-            findViewById<TextView>(R.id.city).setText(weatherForLocation.cityTitle)
-            findViewById<TextView>(R.id.state).setText(weatherForLocation.parentRegion.title)
-        }
+
+
+
+        call.enqueue(object : Callback<WeatherForLocation> {
+            override fun onFailure(call: Call<WeatherForLocation>, t: Throwable) {
+                findViewById<TextView>(R.id.city).text = t.message
+                findViewById<TextView>(R.id.state).text = t.message
+            }
+
+            override fun onResponse(
+                call: Call<WeatherForLocation>,
+                response: Response<WeatherForLocation>
+            ) {
+                if (!response.isSuccessful) {
+                    findViewById<TextView>(R.id.city).text = "Code: " + response.code()
+                    findViewById<TextView>(R.id.state).text = "Code: " + response.code()
+                    return
+                }
+                val weatherForLocation = response.body()
+                findViewById<TextView>(R.id.city).text = weatherForLocation!!.cityTitle
+                findViewById<TextView>(R.id.state).text = weatherForLocation.parentRegion.title
+            }
+        })
     }
 }
+
+
