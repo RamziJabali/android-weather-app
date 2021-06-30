@@ -34,14 +34,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCountryAndCityName(whereOnEarthId: Int) {
         stopShowingViewsWhileLoading()
-//        loadingDialog.startLoadingDialog()
-        showProgressBarAndLoadingText()
+        loadingDialog.startLoadingDialog()
+//        showProgressBarAndLoadingText()
         val call = api.getWeatherForWhereOnEarthId(whereOnEarthId)
         call.enqueue(
             object : Callback<WeatherForLocation> {
                 override fun onFailure(call: Call<WeatherForLocation>, t: Throwable) {
-//                    loadingDialog.dismissDialog()
-                    hideProgressBarAndLoadingText()
+                    loadingDialog.dismissDialog()
+//                    hideProgressBarAndLoadingText()
                     showViews()
                     findViewById<TextView>(R.id.city).text = t.message
                     findViewById<TextView>(R.id.state).text = t.message
@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
                     call: Call<WeatherForLocation>,
                     response: Response<WeatherForLocation>
                 ) {
-//                    loadingDialog.dismissDialog()
-                    hideProgressBarAndLoadingText()
+                    loadingDialog.dismissDialog()
+//                    hideProgressBarAndLoadingText()
                     showViews()
                     if (!response.isSuccessful) {
                         findViewById<TextView>(R.id.city).text = "Code: " + response.code()
