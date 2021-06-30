@@ -23,7 +23,6 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/city"
         tools:text="Arizona" />
 
@@ -59,21 +58,43 @@
         app:layout_constraintEnd_toStartOf="@id/pressureText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/temperature"
-        tools:text="Pressure\n1016.0" />
+        android:text="Pressure" />
+
+    <TextView
+        android:id="@+id/pressureValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pressureText"
+        tools:text="1016.0" />
 
     <TextView
         android:id="@+id/humidityText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Humidity"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textSize="28sp"
-        app:layout_constraintEnd_toStartOf="@id/feelsLikeText"
+        app:layout_constraintEnd_toStartOf="@id/windSpeedText"
         app:layout_constraintStart_toEndOf="@id/pressureText"
-        app:layout_constraintTop_toBottomOf="@id/temperature"
-        tools:text="Humidity\n80.0" />
+        app:layout_constraintTop_toBottomOf="@id/temperature" />
 
     <TextView
-        android:id="@+id/feelsLikeText"
+        android:id="@+id/humidityValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="28sp"
+        app:layout_constraintTop_toBottomOf="@id/humidityText"
+        app:layout_constraintStart_toEndOf="@id/pressureValueText"
+        app:layout_constraintEnd_toStartOf="@id/windSpeedValueText"
+        tools:text="80.0" />
+
+    <TextView
+        android:id="@+id/windSpeedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -81,7 +102,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/humidityText"
         app:layout_constraintTop_toBottomOf="@id/weatherImage"
-        tools:text="Wind Speed\n9.65" />
+        android:text="Wind Speed" />
+
+    <TextView
+        android:id="@+id/windSpeedValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/windSpeedText"
+        tools:text="9.65" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
