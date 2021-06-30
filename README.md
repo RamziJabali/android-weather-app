@@ -8,3 +8,4 @@ Simple weather app that uses Retrofit and okhttp
 ## Libraries
 - [Retrofit](https://square.github.io/retrofit/)
 - [OkHttp](https://square.github.io/okhttp/)
+- [Gson](https://github.com/google/gson)
