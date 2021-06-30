@@ -3,6 +3,8 @@ package com.example.androidweatherapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.example.androidweatherapp.models.Location
 import com.example.androidweatherapp.models.WeatherForLocation
@@ -32,12 +34,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCountryAndCityName(whereOnEarthId: Int) {
         stopShowingViewsWhileLoading()
-        loadingDialog.startLoadingDialog()
+//        loadingDialog.startLoadingDialog()
+        showProgressBarAndLoadingText()
         val call = api.getWeatherForWhereOnEarthId(whereOnEarthId)
         call.enqueue(
             object : Callback<WeatherForLocation> {
                 override fun onFailure(call: Call<WeatherForLocation>, t: Throwable) {
-                    loadingDialog.dismissDialog()
+//                    loadingDialog.dismissDialog()
+                    hideProgressBarAndLoadingText()
                     showViews()
                     findViewById<TextView>(R.id.city).text = t.message
                     findViewById<TextView>(R.id.state).text = t.message
@@ -48,7 +52,8 @@ class MainActivity : AppCompatActivity() {
                     call: Call<WeatherForLocation>,
                     response: Response<WeatherForLocation>
                 ) {
-                    loadingDialog.dismissDialog()
+//                    loadingDialog.dismissDialog()
+                    hideProgressBarAndLoadingText()
                     showViews()
                     if (!response.isSuccessful) {
                         findViewById<TextView>(R.id.city).text = "Code: " + response.code()
@@ -59,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.city).text = weatherForLocation!!.cityTitle
                     findViewById<TextView>(R.id.state).text = weatherForLocation.parentRegion.title
                     findViewById<TextView>(R.id.temperature).text =
-                        weatherForLocation.consolidatedWeather[0].theTemp.toString() + "C"
+                        weatherForLocation.consolidatedWeather[0].theTemp.toString() + " F"
                     findViewById<TextView>(R.id.pressureValueText).text =
                         weatherForLocation.consolidatedWeather[0].airPressure.toString()
                     findViewById<TextView>(R.id.humidityValueText).text =
@@ -107,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.pressureText).visibility = View.GONE
         findViewById<TextView>(R.id.humidityText).visibility = View.GONE
         findViewById<TextView>(R.id.windSpeedText).visibility = View.GONE
+        findViewById<ImageView>(R.id.weatherImage).visibility = View.GONE
     }
     private fun showViews() {
         findViewById<TextView>(R.id.city).visibility = View.VISIBLE
@@ -118,6 +124,16 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.pressureText).visibility = View.VISIBLE
         findViewById<TextView>(R.id.humidityText).visibility = View.VISIBLE
         findViewById<TextView>(R.id.windSpeedText).visibility = View.VISIBLE
+        findViewById<ImageView>(R.id.weatherImage).visibility = View.VISIBLE
+    }
+
+    private fun showProgressBarAndLoadingText(){
+        findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
+        findViewById<TextView>(R.id.loadingTextView).visibility = View.VISIBLE
+    }
+    private fun hideProgressBarAndLoadingText(){
+        findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
+        findViewById<TextView>(R.id.loadingTextView).visibility = View.GONE
     }
 }
 
