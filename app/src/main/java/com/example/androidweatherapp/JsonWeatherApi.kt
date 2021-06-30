@@ -13,7 +13,7 @@ interface JsonWeatherApi {
     fun getWeatherForWhereOnEarthId(@Path("whereOnEarthId") whereOnEarthId: Int): Call<WeatherForLocation>
 
     @GET("/api/location/search")
-    fun getCitiesForQuery(@Query("query") cityName: String): Call<List<Location>>
+    fun getCitiesForQuery(@Query("cityName") cityName: String): Call<List<Location>>
 
 
 }

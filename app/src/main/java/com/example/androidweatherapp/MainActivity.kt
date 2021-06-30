@@ -17,12 +17,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var api: JsonWeatherApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
         api = ApiServiceBuilder(JsonWeatherApi::class.java)
             .withApiBaseUrl(API_BASE_URL)
             .build()
+
+        var loadingDialog = LoadingDialog(this)
 
         getCountryAndCityName(2487956)
 //        getCities()
