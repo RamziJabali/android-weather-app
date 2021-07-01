@@ -1,2 +1,5 @@
-package com.example.androidweatherapp
+package com.example.androidweatherapp.viewmodel
 
+class ViewModel {
+
+}

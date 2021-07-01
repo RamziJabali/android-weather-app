@@ -1,4 +1,4 @@
-package com.example.androidweatherapp
+package com.example.androidweatherapp.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import com.example.androidweatherapp.viewmodel.ApiServiceBuilder
+import com.example.androidweatherapp.viewmodel.JsonWeatherApi
+import com.example.androidweatherapp.R
 import com.example.androidweatherapp.models.Location
 import com.example.androidweatherapp.models.WeatherForLocation
 import retrofit2.Call
@@ -24,7 +27,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        api = ApiServiceBuilder(JsonWeatherApi::class.java)
+        api = ApiServiceBuilder(
+            JsonWeatherApi::class.java
+        )
             .withApiBaseUrl(API_BASE_URL)
             .build()
 

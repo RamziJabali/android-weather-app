@@ -1,8 +1,8 @@
-package com.example.androidweatherapp
+package com.example.androidweatherapp.views
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.view.LayoutInflater
+import com.example.androidweatherapp.R
 
 class LoadingDialog(var activity: Activity) {
 

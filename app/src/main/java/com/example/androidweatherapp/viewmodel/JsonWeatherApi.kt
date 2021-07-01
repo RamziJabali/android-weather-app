@@ -1,4 +1,4 @@
-package com.example.androidweatherapp
+package com.example.androidweatherapp.viewmodel
 
 import com.example.androidweatherapp.models.Location
 import com.example.androidweatherapp.models.WeatherForLocation
