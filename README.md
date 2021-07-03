@@ -2,7 +2,7 @@
 Simple weather app that uses Retrofit and okhttp
 
 <p align="center">
-  <img width="300" height="645" src="https://github.com/RamziJabali/android-weather-app/blob/main/ScreenCapture/android3DLoading.gif">
+  <img width="300" height="645" src="https://github.com/RamziJabali/android-weather-app/blob/main/ScreenCapture/AppRunningFinal.gif">
 </p>
 
 ## Libraries
