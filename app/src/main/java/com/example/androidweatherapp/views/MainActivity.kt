@@ -42,6 +42,13 @@ class MainActivity : AppCompatActivity(), ViewListener {
         viewModel.startApp()
     }
 
+    override fun setNewViewState(viewState: ViewState) {
+        if (viewState.isLoadingDialog) loadingDialog.show() else loadingDialog.hide()
+        setViewVisibility(viewState.viewOfText)
+        populateViewsWithText(viewState)
+        return
+    }
+
     private fun setUpFieldMembers(){
         viewModel = ViewModel(this)
         loadingDialog = LoadingDialog(this)
@@ -60,17 +67,9 @@ class MainActivity : AppCompatActivity(), ViewListener {
         humidityTextView = findViewById<TextView>(R.id.humidityText)
         windSpeedTextView = findViewById<TextView>(R.id.windSpeedText)
         weatherImageView = findViewById<ImageView>(R.id.weatherImage)
-
     }
 
-    override fun setNewViewState(viewState: ViewState) {
-        if (viewState.isLoadingDialog) loadingDialog.show() else loadingDialog.hide()
-        showViews(viewState.viewOfText)
-        populateViewsWithText(viewState)
-        return
-    }
-
-    private fun showViews(viewOfText: Int) {
+    private fun setViewVisibility(viewOfText: Int) {
         cityTextView.visibility = viewOfText
         stateTextView.visibility = viewOfText
         temperatureTextView.visibility = viewOfText
@@ -82,7 +81,6 @@ class MainActivity : AppCompatActivity(), ViewListener {
         windSpeedTextView.visibility = viewOfText
         weatherImageView.visibility = viewOfText
     }
-
 
     private fun populateViewsWithText(viewState: ViewState) {
         with(viewState) {
