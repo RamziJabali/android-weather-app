@@ -23,4 +23,14 @@ class UseCase(var viewModel: ViewModel) {
         viewModel.onFailure(call, t)
     }
 
+    fun getTemp(weatherForLocation: WeatherForLocation):String {
+        val weatherInt= (weatherForLocation.consolidatedWeather[0].theTemp * 100).toInt()
+        return ((weatherInt).toDouble() / 100).toString() + " F"
+    }
+
+    fun getWindSpeed(weatherForLocation: WeatherForLocation):String{
+        val weatherInt= (weatherForLocation.consolidatedWeather[0].windSpeed * 100).toInt()
+        return ((weatherInt).toDouble() / 100).toString()
+    }
+
 }

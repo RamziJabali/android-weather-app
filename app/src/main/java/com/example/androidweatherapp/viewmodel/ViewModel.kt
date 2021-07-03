@@ -6,6 +6,7 @@ import com.example.androidweatherapp.models.WeatherForLocation
 import com.example.androidweatherapp.views.MainActivity
 import retrofit2.Call
 import retrofit2.Response
+import kotlin.math.round
 
 class ViewModel(
     private var view: MainActivity
@@ -16,10 +17,10 @@ class ViewModel(
 
     fun startApp() {
         viewState = ViewState()
-            getWeather()
-            useCase.getWeatherForLocation(44418)
-            viewState.copy(isLoadingDialog = false)
-            invalidateView()
+        getWeather()
+        useCase.getWeatherForLocation(44418)
+        viewState.copy(isLoadingDialog = false)
+        invalidateView()
 
     }
 
@@ -57,14 +58,16 @@ class ViewModel(
                 return
             }
             val weatherForLocation = response.body()
-            cityTitle = weatherForLocation!!.cityTitle
-            title = weatherForLocation.parentRegion.title
-            theTemp =
-                weatherForLocation.consolidatedWeather[0].theTemp.toString() + " F"
-            airPressure =
-                weatherForLocation.consolidatedWeather[0].airPressure.toString()
-            humidity = weatherForLocation.consolidatedWeather[0].humidity.toString()
-            windSpeed = weatherForLocation.consolidatedWeather[0].windSpeed.toString()
+            with(useCase) {
+                cityTitle = weatherForLocation!!.cityTitle
+                title = weatherForLocation.parentRegion.title
+                theTemp = getTemp(weatherForLocation)
+                airPressure =
+                    weatherForLocation.consolidatedWeather[0].airPressure.toString()
+                humidity = weatherForLocation.consolidatedWeather[0].humidity.toString()
+                windSpeed = getWindSpeed(weatherForLocation)
+
+            }
         }
         invalidateView()
     }

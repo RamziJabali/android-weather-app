@@ -40,7 +40,8 @@
     <ImageView
         android:id="@+id/weatherImage"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="140dp"
+        android:paddingBottom="40dp"
         android:src="@drawable/ic_weathericon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/temperature"
@@ -61,6 +62,7 @@
         android:id="@+id/temperature"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingTop="40dp"
         android:paddingBottom="40dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintEnd_toStartOf="@id/weatherImage"
