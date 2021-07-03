@@ -11,4 +11,4 @@ Simple weather app that uses Retrofit and okhttp
 - [Gson](https://github.com/google/gson)
 
 ## Architecture 
-- [MVVM]
+- MVVM
