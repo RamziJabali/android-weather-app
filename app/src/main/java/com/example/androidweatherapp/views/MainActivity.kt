@@ -18,52 +18,80 @@ class MainActivity : AppCompatActivity(), ViewListener {
 
     private lateinit var api: JsonWeatherApi
 
-    private val loadingDialog = LoadingDialog(this)
+    private lateinit var loadingDialog: LoadingDialog
+
+    private lateinit var viewModel: ViewModel
+
+    private lateinit var cityTextView: TextView
+    private lateinit var stateTextView: TextView
+    private lateinit var temperatureTextView: TextView
+    private lateinit var pressureValueTextView: TextView
+    private lateinit var humidityValueTextView: TextView
+    private lateinit var windSpeedValueTextView: TextView
+    private lateinit var windPressureText: TextView
+    private lateinit var humidityTextView:TextView
+    private lateinit var windSpeedTextView:TextView
+    private lateinit var weatherImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setUpFieldMembers()
+
+        viewModel.startApp()
+    }
+
+    private fun setUpFieldMembers(){
+        viewModel = ViewModel(this)
+        loadingDialog = LoadingDialog(this)
         api = ApiServiceBuilder(
             JsonWeatherApi::class.java
         )
             .withApiBaseUrl(API_BASE_URL)
             .build()
+        cityTextView = findViewById<TextView>(R.id.city)
+        stateTextView = findViewById<TextView>(R.id.state)
+        temperatureTextView = findViewById<TextView>(R.id.temperature)
+        pressureValueTextView = findViewById<TextView>(R.id.pressureValueText)
+        humidityValueTextView = findViewById<TextView>(R.id.humidityValueText)
+        windSpeedValueTextView = findViewById<TextView>(R.id.windSpeedValueText)
+        windPressureText = findViewById<TextView>(R.id.pressureText)
+        humidityTextView = findViewById<TextView>(R.id.humidityText)
+        windSpeedTextView = findViewById<TextView>(R.id.windSpeedText)
+        weatherImageView = findViewById<ImageView>(R.id.weatherImage)
 
-        val viewModel = ViewModel(api, this)
-        viewModel.startApp()
     }
 
-
     override fun setNewViewState(viewState: ViewState) {
-        if (viewState.isLoadingDialog) loadingDialog.startLoadingDialog() else loadingDialog.dismissDialog()
+        if (viewState.isLoadingDialog) loadingDialog.show() else loadingDialog.hide()
         showViews(viewState.viewOfText)
         populateViewsWithText(viewState)
         return
     }
 
     private fun showViews(viewOfText: Int) {
-        findViewById<TextView>(R.id.city).visibility = viewOfText
-        findViewById<TextView>(R.id.state).visibility = viewOfText
-        findViewById<TextView>(R.id.temperature).visibility = viewOfText
-        findViewById<TextView>(R.id.pressureValueText).visibility = viewOfText
-        findViewById<TextView>(R.id.humidityValueText).visibility = viewOfText
-        findViewById<TextView>(R.id.windSpeedValueText).visibility = viewOfText
-        findViewById<TextView>(R.id.pressureText).visibility = viewOfText
-        findViewById<TextView>(R.id.humidityText).visibility = viewOfText
-        findViewById<TextView>(R.id.windSpeedText).visibility = viewOfText
-        findViewById<ImageView>(R.id.weatherImage).visibility = viewOfText
+        cityTextView.visibility = viewOfText
+        stateTextView.visibility = viewOfText
+        temperatureTextView.visibility = viewOfText
+        pressureValueTextView.visibility = viewOfText
+        humidityValueTextView.visibility = viewOfText
+        windSpeedValueTextView.visibility = viewOfText
+        windPressureText.visibility = viewOfText
+        humidityTextView.visibility = viewOfText
+        windSpeedTextView.visibility = viewOfText
+        weatherImageView.visibility = viewOfText
     }
 
 
     private fun populateViewsWithText(viewState: ViewState) {
         with(viewState) {
-            findViewById<TextView>(R.id.city).text = cityTitle
-            findViewById<TextView>(R.id.state).text = title
-            findViewById<TextView>(R.id.temperature).text = theTemp
-            findViewById<TextView>(R.id.pressureValueText).text = airPressure
-            findViewById<TextView>(R.id.humidityValueText).text = humidity
-            findViewById<TextView>(R.id.windSpeedValueText).text = windSpeed
+            cityTextView.text = cityTitle
+            stateTextView.text = title
+            temperatureTextView.text = theTemp
+            pressureValueTextView.text = airPressure
+            humidityValueTextView.text = humidity
+            windSpeedValueTextView.text = windSpeed
         }
     }
 

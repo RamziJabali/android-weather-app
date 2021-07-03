@@ -4,22 +4,23 @@ import android.app.Activity
 import android.app.AlertDialog
 import com.example.androidweatherapp.R
 
-class LoadingDialog(var activity: Activity) {
+class LoadingDialog(activity: Activity) {
 
-    private lateinit var dialog: AlertDialog
+    private val dialog: AlertDialog
 
-    fun startLoadingDialog() {
+    init {
         val builder = AlertDialog.Builder(activity)
-
-        var inflater = activity.layoutInflater
+        val inflater = activity.layoutInflater
         builder.setView(inflater.inflate(R.layout.loading_screen, null))
         builder.setCancelable(false)
-
         dialog = builder.create()
+    }
+
+    fun show() {
         dialog.show()
     }
 
-    fun dismissDialog(){
+    fun hide(){
         dialog.dismiss()
     }
 
