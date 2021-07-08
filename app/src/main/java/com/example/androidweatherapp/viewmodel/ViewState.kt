@@ -1,10 +1,13 @@
 package com.example.androidweatherapp.viewmodel
 
 import android.view.View
+import java.io.SyncFailedException
 
 data class ViewState(
 
     var isLoadingDialog: Boolean = false,
+
+    var didCallFail: Boolean = false,
 
     var title: String = "",
 

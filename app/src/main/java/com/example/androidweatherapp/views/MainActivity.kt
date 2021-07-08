@@ -2,8 +2,10 @@ package com.example.androidweatherapp.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.VisibleForTesting
 import com.example.androidweatherapp.viewmodel.ApiServiceBuilder
 import com.example.androidweatherapp.viewmodel.JsonWeatherApi
 import com.example.androidweatherapp.R
@@ -22,15 +24,23 @@ class MainActivity : AppCompatActivity(), ViewListener {
 
     private lateinit var viewModel: ViewModel
 
-    private lateinit var cityTextView: TextView
-    private lateinit var stateTextView: TextView
-    private lateinit var temperatureTextView: TextView
-    private lateinit var pressureValueTextView: TextView
-    private lateinit var humidityValueTextView: TextView
-    private lateinit var windSpeedValueTextView: TextView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var cityTextView: TextView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var stateTextView: TextView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var temperatureTextView: TextView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var pressureValueTextView: TextView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var humidityValueTextView: TextView
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var windSpeedValueTextView: TextView
+
     private lateinit var windPressureText: TextView
-    private lateinit var humidityTextView:TextView
-    private lateinit var windSpeedTextView:TextView
+    private lateinit var humidityTextView: TextView
+    private lateinit var windSpeedTextView: TextView
+    private lateinit var onFailureTextView: TextView
     private lateinit var weatherImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +54,13 @@ class MainActivity : AppCompatActivity(), ViewListener {
 
     override fun setNewViewState(viewState: ViewState) {
         if (viewState.isLoadingDialog) loadingDialog.show() else loadingDialog.hide()
-        setViewVisibility(viewState.viewOfText)
+        if(viewState.didCallFail) onFailureTextView.visibility = View.VISIBLE else onFailureTextView.visibility = View.GONE
+        setTextAndImageViewVisibility(viewState.viewOfText)
         populateViewsWithText(viewState)
         return
     }
 
-    private fun setUpFieldMembers(){
+    private fun setUpFieldMembers() {
         viewModel = ViewModel(this)
         loadingDialog = LoadingDialog(this)
         api = ApiServiceBuilder(
@@ -57,19 +68,21 @@ class MainActivity : AppCompatActivity(), ViewListener {
         )
             .withApiBaseUrl(API_BASE_URL)
             .build()
-        cityTextView = findViewById<TextView>(R.id.city)
-        stateTextView = findViewById<TextView>(R.id.state)
-        temperatureTextView = findViewById<TextView>(R.id.temperature)
-        pressureValueTextView = findViewById<TextView>(R.id.pressureValueText)
-        humidityValueTextView = findViewById<TextView>(R.id.humidityValueText)
-        windSpeedValueTextView = findViewById<TextView>(R.id.windSpeedValueText)
-        windPressureText = findViewById<TextView>(R.id.pressureText)
-        humidityTextView = findViewById<TextView>(R.id.humidityText)
-        windSpeedTextView = findViewById<TextView>(R.id.windSpeedText)
-        weatherImageView = findViewById<ImageView>(R.id.weatherImage)
+        cityTextView = findViewById(R.id.city)
+        stateTextView = findViewById(R.id.state)
+        temperatureTextView = findViewById(R.id.temperature)
+        pressureValueTextView = findViewById(R.id.pressureValueText)
+        humidityValueTextView = findViewById(R.id.humidityValueText)
+        windSpeedValueTextView = findViewById(R.id.windSpeedValueText)
+        windPressureText = findViewById(R.id.pressureText)
+        humidityTextView = findViewById(R.id.humidityText)
+        windSpeedTextView = findViewById(R.id.windSpeedText)
+        onFailureTextView = findViewById(R.id.onFailureText)
+        weatherImageView = findViewById(R.id.weatherImage)
     }
 
-    private fun setViewVisibility(viewOfText: Int) {
+
+    private fun setTextAndImageViewVisibility(viewOfText: Int) {
         cityTextView.visibility = viewOfText
         stateTextView.visibility = viewOfText
         temperatureTextView.visibility = viewOfText

@@ -8,29 +8,28 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class WeatherRepo(
-    private var useCase: UseCase
+        private var useCase: UseCase
 ) {
-
     private val api: JsonWeatherApi = ApiServiceBuilder(
-        JsonWeatherApi::class.java
+            JsonWeatherApi::class.java
     ).withApiBaseUrl(MainActivity.API_BASE_URL)
         .build()
 
     fun getWeatherForLocation(whereOnEarthId: Int) {
         val call = api.getWeatherForWhereOnEarthId(whereOnEarthId)
         call.enqueue(
-            object : Callback<WeatherForLocation> {
+                object : Callback<WeatherForLocation> {
 
-                override fun onFailure(call: Call<WeatherForLocation>, t: Throwable) {
-                useCase.onFailure(call,t)
-                }
+                    override fun onFailure(call: Call<WeatherForLocation>, t: Throwable) {
+                        useCase.onFailure(call, t)
+                    }
 
-                override fun onResponse(
-                    call: Call<WeatherForLocation>,
-                    response: Response<WeatherForLocation>
-                ) {
-                    useCase.onResponse(call,response)
-                }
-            })
+                    override fun onResponse(
+                            call: Call<WeatherForLocation>,
+                            response: Response<WeatherForLocation>
+                    ) {
+                        useCase.onResponse(call, response)
+                    }
+                })
     }
 }

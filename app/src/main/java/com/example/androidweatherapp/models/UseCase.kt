@@ -33,4 +33,7 @@ class UseCase(var viewModel: ViewModel) {
         return ((weatherInt).toDouble() / 100).toString()
     }
 
+    fun onFailureMessage(t: Throwable): String = "Code: " + t.message
+
+
 }

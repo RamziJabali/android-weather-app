@@ -1,25 +1,26 @@
 package com.example.androidweatherapp.viewmodel
 
 import android.view.View
+import androidx.annotation.VisibleForTesting
+import com.example.androidweatherapp.models.Model
 import com.example.androidweatherapp.models.UseCase
 import com.example.androidweatherapp.models.WeatherForLocation
 import com.example.androidweatherapp.views.MainActivity
 import retrofit2.Call
 import retrofit2.Response
-import kotlin.math.round
 
 class ViewModel(
     private var view: MainActivity
 ) {
 
     private lateinit var viewState: ViewState
-    private val useCase = UseCase(this)
 
+    private val useCase = UseCase(this)
     fun startApp() {
         viewState = ViewState()
         getWeather()
-        useCase.getWeatherForLocation(44418)
-        viewState.copy(isLoadingDialog = false)
+        useCase.getWeatherForLocation(Model.sanfranWOEID)
+        viewState.isLoadingDialog = false
         invalidateView()
 
     }
@@ -39,8 +40,9 @@ class ViewModel(
     fun onFailure(call: Call<WeatherForLocation>, t: Throwable) {
         with(viewState) {
             isLoadingDialog = false
-            viewOfText = View.VISIBLE
-            onFailureMessage = t.message.toString()
+            didCallFail = true
+            viewOfText = View.GONE
+            onFailureMessage = useCase.onFailureMessage(t)
         }
         invalidateView()
     }
