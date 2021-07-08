@@ -20,7 +20,7 @@ class ViewModel(
         viewState = ViewState()
         getWeather()
         useCase.getWeatherForLocation(Model.sanfranWOEID)
-        viewState.isLoadingDialog = false
+        viewState.copy(isLoadingDialog = false)
         invalidateView()
 
     }
