@@ -10,3 +10,4 @@
 - [Retrofit](https://square.github.io/retrofit/)
 - [OkHttp](https://square.github.io/okhttp/)
 - [Gson](https://github.com/google/gson)
+- [MockK](https://mockk.io/)
